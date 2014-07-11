@@ -16,11 +16,12 @@
 #include <iostream>
 #include <algorithm>
 #include <iterator>
+#include <fstream>
 
 #include <curl/curl.h>
 #include "../lib/jsoncpp.cpp"
 #include "getoptions.h"
 #include "../lib/http-get/http-get.cpp"
-//#include "../lib/http-get/http-get.c"
+#include <json/json.h>
 
 std::string api_key = "12a85ecd6e7543af55a878e45c263086";
