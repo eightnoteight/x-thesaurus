@@ -32,8 +32,7 @@ static size_t http_get_cb(void *contents, size_t size, size_t nmemb, void *userp
 
   return realsize;
 }
-
-/**
+/*
  * Perform an HTTP(S) GET on `url`
  */
 
@@ -43,16 +42,19 @@ http_get_response_t *http_get(const char *url) {
   static http_get_response_t res;
   res.data = (char*)malloc(1);
   res.size = 0;
-
   curl_easy_setopt(req, CURLOPT_URL, url);
   curl_easy_setopt(req, CURLOPT_HTTPGET, 1);
-  //curl_easy_setopt(req, CURLOPT_FOLLOWLOCATION, 1);
+  curl_easy_setopt(req, CURLOPT_FOLLOWLOCATION, 1);
   curl_easy_setopt(req, CURLOPT_WRITEFUNCTION, http_get_cb);
   curl_easy_setopt(req, CURLOPT_WRITEDATA, (void *)&res);
+  //curl_easy_setopt(req, CURLOPT_HEADERFUNCTION, header_callback);
+  //curl_easy_setopt(req, CURLOPT_HEADERDATA, (void *)&res);
 
   int c = curl_easy_perform(req);
 
   curl_easy_getinfo(req, CURLINFO_RESPONSE_CODE, &res.status);
+  if ( curl_easy_getinfo(req, CURLINFO_EFFECTIVE_URL, &res.msg) != CURLE_OK)
+	  fprintf(stderr, "msg failed");
   res.ok = (200 == res.status && CURLE_ABORTED_BY_CALLBACK != c) ? 1 : 0;
   curl_easy_cleanup(req);
 
@@ -80,14 +82,13 @@ int http_get_file(const char *url, const char *file) {
 
   curl_easy_setopt(req, CURLOPT_URL, url);
   curl_easy_setopt(req, CURLOPT_HTTPGET, 1);
-  //curl_easy_setopt(req, CURLOPT_FOLLOWLOCATION, 1);
+  curl_easy_setopt(req, CURLOPT_FOLLOWLOCATION, 1);
   curl_easy_setopt(req, CURLOPT_WRITEFUNCTION, http_get_file_cb);
   curl_easy_setopt(req, CURLOPT_WRITEDATA, fp);
   int res = curl_easy_perform(req);
 
   long status;
   curl_easy_getinfo(req, CURLINFO_RESPONSE_CODE, &status);
-
   curl_easy_cleanup(req);
   fclose(fp);
 

@@ -14,7 +14,9 @@ extern "C" {
 
 typedef struct {
   char *data;
+  char *msg;
   size_t size;
+  size_t msgsize;
   long status;
   int ok;
 } http_get_response_t;

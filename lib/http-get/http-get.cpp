@@ -8,6 +8,7 @@ public:
 	int ok;
 	long long int status;
 	std::string msg;
+	std::string data;
 	std::string filename;
 	GET(std::string url);
 
@@ -18,10 +19,10 @@ GET::GET(std::string url="http://www.google.com")
 	http_get_response_t *res=http_get(url.c_str());
 	ok = res->ok;
 	status = res->status;
-	std::string tmp (res->data,res->size);
-	msg = tmp;
+	data.assign(res->data);
+	msg.assign(res->msg, res->msg + strlen(res->msg));
 	filename = file(url);
-	http_get_free(res);	
+	http_get_free(res);
 }
 std::string GET::randstr(int len)
 {
