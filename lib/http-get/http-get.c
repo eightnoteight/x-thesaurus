@@ -46,7 +46,7 @@ http_get_response_t *http_get(const char *url) {
 
   curl_easy_setopt(req, CURLOPT_URL, url);
   curl_easy_setopt(req, CURLOPT_HTTPGET, 1);
-  curl_easy_setopt(req, CURLOPT_FOLLOWLOCATION, 1);
+  //curl_easy_setopt(req, CURLOPT_FOLLOWLOCATION, 1);
   curl_easy_setopt(req, CURLOPT_WRITEFUNCTION, http_get_cb);
   curl_easy_setopt(req, CURLOPT_WRITEDATA, (void *)&res);
 
@@ -80,7 +80,7 @@ int http_get_file(const char *url, const char *file) {
 
   curl_easy_setopt(req, CURLOPT_URL, url);
   curl_easy_setopt(req, CURLOPT_HTTPGET, 1);
-  curl_easy_setopt(req, CURLOPT_FOLLOWLOCATION, 1);
+  //curl_easy_setopt(req, CURLOPT_FOLLOWLOCATION, 1);
   curl_easy_setopt(req, CURLOPT_WRITEFUNCTION, http_get_file_cb);
   curl_easy_setopt(req, CURLOPT_WRITEDATA, fp);
   int res = curl_easy_perform(req);
