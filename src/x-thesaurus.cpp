@@ -38,7 +38,6 @@ int main(int argc, char const *argv[])
 		{
 			Json::Value root ;
 			Json::Reader reader;
-			std::cout << get.filename << std::endl;
 			std::ifstream file;
 			file.open((get.filename).c_str());
 			std::istream& inp = file;
@@ -50,7 +49,40 @@ int main(int argc, char const *argv[])
 				<< reader.getFormattedErrorMessages();
 				continue;
 			}
-			std::cout << root << std::endl;
+			std::list<std::string> partsofspeech;
+					partsofspeech.push_back("noun");
+					partsofspeech.push_back("verb");
+					partsofspeech.push_back("adjective");
+					partsofspeech.push_back("adverb");
+					partsofspeech.push_back("pronoun");
+					partsofspeech.push_back("preposition");
+					partsofspeech.push_back("conjunction");
+					partsofspeech.push_back("interjection");
+			std::vector<std::string> reltyplist;
+					reltyplist.push_back("syn");
+					reltyplist.push_back("ant");
+					reltyplist.push_back("rel");
+					reltyplist.push_back("sim");
+					reltyplist.push_back("usr");
+			std::map<std::string, std::string> reltypmap ;
+					reltypmap["syn"] = "Synonyms";
+					reltypmap["ant"] = "Antonyms";
+					reltypmap["rel"] = "Related Terms";
+					reltypmap["sim"] = "Similar Types";
+					reltypmap["usr"] = "User Suggestions";
+			std::list<std::string>::iterator parts=partsofspeech.begin();
+			for (int i=0; i < root.size() && parts != partsofspeech.end() && i < 10; i++, parts++)
+			{
+				std::cout << *parts << std::endl;
+				for (int j=0; j < root[*parts].size() && j < 10;j++)
+				{
+					std::cout << "\t" << reltypmap[reltyplist[j]] << std::endl;
+					for (int k=0; k<root[*parts][reltyplist[j]].size() && k < 10; k++)
+					{
+						std::cout << "\t\t" << root[*parts][reltyplist[j]][k].asString() << std::endl;
+					}
+				}
+			}
 		}
 
 	}
