@@ -27,12 +27,10 @@ int main(int argc, char const *argv[])
 		{
 			std::cout << "Failed to parse configuration\n"
 			<< reader.getFormattedErrorMessages();
-			return 1;
+			continue;
 		}
 		std::cout << root << std::endl;
 
-		//http_get_response_t* GET;
-		//GET = http_get("http://words.bighugelabs.com/api/2/" + api_key + "/" + opt.get_next() + "/json");
 	}
 	return 0;
 }
