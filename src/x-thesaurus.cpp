@@ -49,27 +49,6 @@ int main(int argc, char const *argv[])
 				<< reader.getFormattedErrorMessages();
 				continue;
 			}
-			std::list<std::string> partsofspeech;
-					partsofspeech.push_back("noun");
-					partsofspeech.push_back("verb");
-					partsofspeech.push_back("adjective");
-					partsofspeech.push_back("adverb");
-					partsofspeech.push_back("pronoun");
-					partsofspeech.push_back("preposition");
-					partsofspeech.push_back("conjunction");
-					partsofspeech.push_back("interjection");
-			std::vector<std::string> reltyplist;
-					reltyplist.push_back("syn");
-					reltyplist.push_back("ant");
-					reltyplist.push_back("rel");
-					reltyplist.push_back("sim");
-					reltyplist.push_back("usr");
-			std::map<std::string, std::string> reltypmap ;
-					reltypmap["syn"] = "Synonyms";
-					reltypmap["ant"] = "Antonyms";
-					reltypmap["rel"] = "Related Terms";
-					reltypmap["sim"] = "Similar Types";
-					reltypmap["usr"] = "User Suggestions";
 			std::list<std::string>::iterator parts=partsofspeech.begin();
 			for (int i=0; i < root.size() && parts != partsofspeech.end() && i < 10; i++, parts++)
 			{
