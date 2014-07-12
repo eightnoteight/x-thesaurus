@@ -24,4 +24,27 @@
 #include "../lib/http-get/http-get.cpp"
 #include <json/json.h>
 
-std::string api_key = "12a85ecd6e7543af55a878e45c263086";
+std::string api_key = "YOURAPIKEY";//12a85ecd6e7543af55a878e45c263086
+
+
+std::list<std::string> partsofspeech;
+	partsofspeech.push_back("noun");
+	partsofspeech.push_back("verb");
+	partsofspeech.push_back("adjective");
+	partsofspeech.push_back("adverb");
+	partsofspeech.push_back("pronoun");
+	partsofspeech.push_back("preposition");
+	partsofspeech.push_back("conjunction");
+	partsofspeech.push_back("interjection");
+std::vector<std::string> reltyplist;
+	reltyplist.push_back("syn");
+	reltyplist.push_back("ant");
+	reltyplist.push_back("rel");
+	reltyplist.push_back("sim");
+	reltyplist.push_back("usr");
+std::map<std::string, std::string> reltypmap ;
+	reltypmap["syn"] = "Synonyms";
+	reltypmap["ant"] = "Antonyms";
+	reltypmap["rel"] = "Related Terms";
+	reltypmap["sim"] = "Similar Types";
+	reltypmap["usr"] = "User Suggestions";
