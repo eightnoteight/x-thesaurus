@@ -2,15 +2,15 @@
 
 int main(int argc, char const *argv[])
 {
-	if (argc < 2)
-	{
-		std::cout << "[warning] x-thesaurus needs a word to search" << std::endl;
-		std::cout << "[warning] Very few arguments!" << std::endl;
-	}
 	std::list<std::string> partsofspeech;
 	std::vector<std::string> reltyplist;
 	std::map<std::string, std::string> reltypmap;
 	init(partsofspeech,reltyplist,reltypmap);
+	if (argc < 2)
+	{
+		std::cout << fg.red << "[warning]" << st.reset << " x-thesaurus needs a word to search" << std::endl;
+		std::cout << fg.red << "[warning]" << st.reset << " Very few arguments!" << std::endl;
+	}
 	int words = argc;
 	Geopt opt (argc, argv);
 	for (int i = 1; i < words; ++i)
@@ -23,12 +23,14 @@ int main(int argc, char const *argv[])
 			{
 				case 404:
 					std::cout << \
-					"[x-thesaurus] Sorry couldn't find the word: "\
+					fg.yellow << "[x-thesaurus]" << st.reset << \
+					" Sorry couldn't find the word: "\
 					+ which_word << std::endl;
 					break;
 				case 500:
 					std::cout << \
-					"[x-thesaurus] Usage limit exceeded or Invalid Key"\
+					fg.yellow << "[x-thesaurus]" << st.reset << \
+					" Usage limit exceeded or Invalid Key" \
 					<< std::endl;
 					break;
 				case 0:
@@ -49,20 +51,28 @@ int main(int argc, char const *argv[])
 			file.close();
 			if ( !parsingSuccessful )
 			{
-				std::cout << "Failed to parse configuration\n"
+				std::cout << \
+				fg.red << "[warning]" << st.reset << \
+				"Failed to parse configuration\n"
 				<< reader.getFormattedErrorMessages();
 				continue;
 			}
 			std::list<std::string>::iterator parts=partsofspeech.begin();
 			for (int i=0; i < root.size() && parts != partsofspeech.end() && i < 10; i++, parts++)
 			{
-				std::cout << *parts << std::endl;
+				std::cout << \
+				fg.green << *parts << st.reset \
+				<< std::endl;
 				for (int j=0; j < root[*parts].size() && j < 10;j++)
 				{
-					std::cout << "\t" << reltypmap[reltyplist[j]] << std::endl;
+					std::cout << "   " << \
+					fg.cyan << reltypmap[reltyplist[j]] << st.reset \
+					<< std::endl;
 					for (int k=0; k<root[*parts][reltyplist[j]].size() && k < 10; k++)
 					{
-						std::cout << "\t\t" << root[*parts][reltyplist[j]][k].asString() << std::endl;
+						std::cout << "      " << \
+						st.bold << fg.blue << root[*parts][reltyplist[j]][k].asString() << st.reset \
+						<< std::endl;
 					}
 				}
 			}
