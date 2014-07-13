@@ -7,6 +7,10 @@ int main(int argc, char const *argv[])
 		std::cout << "[warning] x-thesaurus needs a word to search" << std::endl;
 		std::cout << "[warning] Very few arguments!" << std::endl;
 	}
+	std::list<std::string> partsofspeech;
+	std::vector<std::string> reltyplist;
+	std::map<std::string, std::string> reltypmap;
+	init(partsofspeech,reltyplist,reltypmap);
 	int words = argc;
 	Geopt opt (argc, argv);
 	for (int i = 1; i < words; ++i)
