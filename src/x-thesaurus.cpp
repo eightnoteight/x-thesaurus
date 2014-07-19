@@ -61,17 +61,23 @@ int main(int argc, char const *argv[])
 				continue;
 			}
 			std::list<std::string>::iterator parts=partsofspeech.begin();
-			for (int i=0; i < root.size() && parts != partsofspeech.end() && i < 10; i++, parts++)
+			for (unsigned int i=0; 
+                    i < root.size() && parts != partsofspeech.end() && i < 10; 
+                        i++, parts++)
 			{
 				std::cout << \
 				fg.green << *parts << st.reset \
 				<< std::endl;
-				for (int j=0; j < root[*parts].size() && j < 10;j++)
+				for (unsigned int j=0; 
+                        j < root[*parts].size() && j < 10; 
+                           j++)
 				{
 					std::cout << "   " << \
 					fg.cyan << reltypmap[reltyplist[j]] << st.reset \
 					<< std::endl;
-					for (int k=0; k<root[*parts][reltyplist[j]].size() && k < 10; k++)
+					for (unsigned int k=0; 
+                            k<root[*parts][reltyplist[j]].size() && k < 10; 
+                                k++)
 					{
 						std::cout << "      " << \
 						st.bold << fg.blue << root[*parts][reltyplist[j]][k].asString() << st.reset \
