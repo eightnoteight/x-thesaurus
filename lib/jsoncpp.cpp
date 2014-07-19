@@ -1,5 +1,5 @@
 /// Json-cpp amalgated source (http://jsoncpp.sourceforge.net/).
-/// It is intented to be used with #include <json/json.h>
+/// It is intented to be used with #include "dist/jsoncpp.cpp"
 
 // //////////////////////////////////////////////////////////////////////
 // Beginning of content of file: LICENSE
@@ -73,7 +73,7 @@ license you like.
 
 
 
-#include <json/json.h>
+#include "json/json.h"
 
 
 // //////////////////////////////////////////////////////////////////////
@@ -84,6 +84,7 @@ license you like.
 // Distributed under MIT license, or public domain if desired and
 // recognized in your jurisdiction.
 // See file LICENSE for detail or copy at http://jsoncpp.sourceforge.net/LICENSE
+
 #ifndef LIB_JSONCPP_JSON_TOOL_H_INCLUDED
 #define LIB_JSONCPP_JSON_TOOL_H_INCLUDED
 
@@ -149,9 +150,24 @@ static inline void uintToString(LargestUInt value, char *&current) {
   } while (value != 0);
 }
 
+/** Change ',' to '.' everywhere in buffer.
+ *
+ * We had a sophisticated way, but it did not work in WinCE.
+ * @see https://github.com/open-source-parsers/jsoncpp/pull/9
+ */
+static inline void fixNumericLocale(char* begin, char* end) {
+  while (begin < end) {
+    if (*begin == ',') {
+      *begin = '.';
+    }
+    ++begin;
+  }
+}
+
 } // namespace Json {
 
 #endif // LIB_JSONCPP_JSON_TOOL_H_INCLUDED
+// vim: et ts=2 sts=2 sw=2 tw=0
 
 // //////////////////////////////////////////////////////////////////////
 // End of content of file: src/lib_json/json_tool.h
@@ -175,9 +191,7 @@ static inline void uintToString(LargestUInt value, char *&current) {
 #include <json/assertions.h>
 #include <json/reader.h>
 #include <json/value.h>
-  #ifndef LIB_JSONCPP_JSON_TOOL_H_INCLUDED
-  #include "json_tool.h"
-  #endif
+#include "json_tool.h"
 #endif // if !defined(JSON_IS_AMALGAMATION)
 #include <utility>
 #include <cstdio>
@@ -951,7 +965,11 @@ std::string Reader::getLocationLineAndColumn(Location location) const {
   getLocationLineAndColumn(location, line, column);
   char buffer[18 + 16 + 16 + 1];
 #if defined(_MSC_VER) && defined(__STDC_SECURE_LIB__)
+  #if defined(WINCE)
+  _snprintf(buffer, sizeof(buffer), "Line %d, Column %d", line, column);
+  #else
   sprintf_s(buffer, sizeof(buffer), "Line %d, Column %d", line, column);
+  #endif
 #else
   snprintf(buffer, sizeof(buffer), "Line %d, Column %d", line, column);
 #endif
@@ -1008,7 +1026,7 @@ std::istream &operator>>(std::istream &sin, Value &root) {
 }
 
 } // namespace Json
-// vim: et ts=3 sts=3 sw=3 tw=0
+// vim: et ts=2 sts=2 sw=2 tw=0
 
 // //////////////////////////////////////////////////////////////////////
 // End of content of file: src/lib_json/json_reader.cpp
@@ -1144,7 +1162,7 @@ private:
 #endif // ifndef JSONCPP_DOC_INCLUDE_IMPLEMENTATION
 
 #endif // JSONCPP_BATCHALLOCATOR_H_INCLUDED
-// vim: et ts=3 sts=3 sw=3 tw=0
+// vim: et ts=2 sts=2 sw=2 tw=0
 
 // //////////////////////////////////////////////////////////////////////
 // End of content of file: src/lib_json/json_batchallocator.h
@@ -1484,7 +1502,7 @@ ValueIterator::operator =( const SelfType &other )
 #include <json/value.h>
 #include <json/writer.h>
 #ifndef JSON_USE_SIMPLE_INTERNAL_ALLOCATOR
-//#include "json_batchallocator.h"
+#include "json_batchallocator.h"
 #endif // #ifndef JSON_USE_SIMPLE_INTERNAL_ALLOCATOR
 #endif // if !defined(JSON_IS_AMALGAMATION)
 #include <math.h>
@@ -1599,7 +1617,7 @@ static inline void releaseStringValue(char *value) {
 #include "json_internalmap.inl"
 #endif // JSON_VALUE_USE_INTERNAL_MAP
 
-//#include "json_valueiterator.inl"
+#include "json_valueiterator.inl"
 #endif // if !defined(JSON_IS_AMALGAMATION)
 
 namespace Json {
@@ -3018,7 +3036,7 @@ Value &Path::make(Value &root) const {
 }
 
 } // namespace Json
-// vim: et ts=3 sts=3 sw=3 tw=0
+// vim: et ts=2 sts=2 sw=2 tw=0
 
 // //////////////////////////////////////////////////////////////////////
 // End of content of file: src/lib_json/json_value.cpp
@@ -3040,7 +3058,7 @@ Value &Path::make(Value &root) const {
 
 #if !defined(JSON_IS_AMALGAMATION)
 #include <json/writer.h>
-//#include "json_tool.h"
+#include "json_tool.h"
 #endif // if !defined(JSON_IS_AMALGAMATION)
 #include <utility>
 #include <assert.h>
@@ -3098,15 +3116,26 @@ std::string valueToString(UInt value) {
 #endif // # if defined(JSON_HAS_INT64)
 
 std::string valueToString(double value) {
-  // We need not request the alternative representation
-  // that always has a decimal point because JSON doesn't distingish the
-  // concepts of reals and integers.
-  std::stringstream str;
-  // Set locale to "C" to always get a '.' instead of a ','
-  str.imbue(std::locale::classic());
-  str.precision(16);
-  str << value;
-  return str.str();
+  // Allocate a buffer that is more than large enough to store the 16 digits of
+  // precision requested below.
+  char buffer[32];
+
+// Print into the buffer. We need not request the alternative representation
+// that always has a decimal point because JSON doesn't distingish the
+// concepts of reals and integers.
+#if defined(_MSC_VER) && defined(__STDC_SECURE_LIB__) // Use secure version with
+                                                      // visual studio 2005 to
+                                                      // avoid warning.
+  #if defined(WINCE)
+  _snprintf(buffer, sizeof(buffer), "%.16g", value);
+  #else
+  sprintf_s(buffer, sizeof(buffer), "%.16g", value);
+  #endif
+#else
+  snprintf(buffer, sizeof(buffer), "%.16g", value);
+#endif
+  fixNumericLocale(buffer, buffer + strlen(buffer));
+  return buffer;
 }
 
 std::string valueToString(bool value) { return value ? "true" : "false"; }
@@ -3687,7 +3716,7 @@ std::ostream &operator<<(std::ostream &sout, const Value &root) {
 }
 
 } // namespace Json
-// vim: et ts=3 sts=3 sw=3 tw=0
+// vim: et ts=2 sts=2 sw=2 tw=0
 
 // //////////////////////////////////////////////////////////////////////
 // End of content of file: src/lib_json/json_writer.cpp
