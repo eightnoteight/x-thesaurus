@@ -2,9 +2,9 @@
 
 int main(int argc, char const *argv[])
 {
-	std::list<std::string> partsofspeech;
-	std::vector<std::string> reltyplist;
-	std::map<std::string, std::string> reltypmap;
+	std::list <std::string> partsofspeech;
+	std::vector <std::string> reltyplist;
+	std::map <std::string, std::string> reltypmap;
 	init(partsofspeech,reltyplist,reltypmap);
 	if (argc < 2)
 	{
