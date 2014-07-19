@@ -84,7 +84,6 @@ license you like.
 // Distributed under MIT license, or public domain if desired and
 // recognized in your jurisdiction.
 // See file LICENSE for detail or copy at http://jsoncpp.sourceforge.net/LICENSE
-
 #ifndef LIB_JSONCPP_JSON_TOOL_H_INCLUDED
 #define LIB_JSONCPP_JSON_TOOL_H_INCLUDED
 
@@ -176,7 +175,9 @@ static inline void uintToString(LargestUInt value, char *&current) {
 #include <json/assertions.h>
 #include <json/reader.h>
 #include <json/value.h>
-//#include "json_tool.h"
+  #ifndef LIB_JSONCPP_JSON_TOOL_H_INCLUDED
+  #include "json_tool.h"
+  #endif
 #endif // if !defined(JSON_IS_AMALGAMATION)
 #include <utility>
 #include <cstdio>
