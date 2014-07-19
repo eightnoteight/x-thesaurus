@@ -25,4 +25,4 @@ show only nouns argument
 show only verbs argument
 show only synonyms argument
 show only antonyms argument
-*declarations of list map vector constants are pretty ugly in [x-thesaurus.h](src/x-thesaurus.h)
+*declarations of list map vector constants are ugly in [x-thesaurus.h](src/x-thesaurus.h)
