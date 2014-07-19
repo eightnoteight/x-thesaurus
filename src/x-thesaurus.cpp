@@ -8,8 +8,8 @@ int main(int argc, char const *argv[])
 	init(partsofspeech,reltyplist,reltypmap);
 	if (argc < 2)
 	{
-		std::cout << fg.red << "[warning]" << st.reset << " x-thesaurus needs a word to search" << std::endl;
-		std::cout << fg.red << "[warning]" << st.reset << " Very few arguments!" << std::endl;
+		std::cout << fg.red << "[warning]" << st.reset << st.bold << " x-thesaurus needs a word to search" << st.reset << std::endl;
+		std::cout << fg.red << "[warning]" << st.reset << st.bold << " Very few arguments!" << st.reset << std::endl;
 	}
 	int words = argc;
 	Geopt opt (argc, argv);
