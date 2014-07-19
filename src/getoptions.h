@@ -1,3 +1,5 @@
+// Geopt is nice for purposes like this where the 
+// args are just the repitions of the program
 class Geopt
 {
 private:
@@ -6,6 +8,7 @@ private:
 public:
 	Geopt(int argc, char const *argv[]);
 	std::string get_next();
+    //destructer not needed
 };
 Geopt::Geopt(int argc, char const *argv[])
 {
