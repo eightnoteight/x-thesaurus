@@ -20,10 +20,9 @@ will do the job
 There is a C++ wrapper to [http-get.c](https://github.com/stephenmathieson/http-get.c) in lib.
 
 ##TO-DO
-colorize the output
 create maximum number of results argument
 show only nouns argument
 show only verbs argument
 show only synonyms argument
 show only antonyms argument
-*Initializers in [x-thesaurus.h](src/x-thesaurus.h)
+*declarations of list map vector constants are pretty ugly in [x-thesaurus.h](src/x-thesaurus.h)
