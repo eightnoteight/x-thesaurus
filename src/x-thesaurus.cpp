@@ -34,8 +34,9 @@ int main(int argc, char const *argv[])
 					<< std::endl;
 					break;
 				case 0:
-					std::cout << std::string("[x-thesaurus] Connection Time Out!\n") +\
-					std::string("[x-thesaurus] Check your Internet Connection!")\
+					std::cout << fg.yellow + "[x-thesaurus]" + fg.red + " Connection Time Out!\n" +\
+					fg.yellow + "[x-thesaurus]" + fg.red + " Check your Internet Connection!" +\
+                    st.reset \
 					<< std::endl;
 					break;
 			}
