@@ -32,12 +32,14 @@ int main(int argc, char const *argv[])
 					fg.yellow << "[x-thesaurus]" << st.reset << \
 					" Usage limit exceeded or Invalid Key" \
 					<< std::endl;
+                    exit(1);
 					break;
 				case 0:
 					std::cout << fg.yellow + "[x-thesaurus]" + fg.red + " Connection Time Out!\n" +\
 					fg.yellow + "[x-thesaurus]" + fg.red + " Check your Internet Connection!" +\
                     st.reset \
 					<< std::endl;
+                    exit(1);
 					break;
 			}
 		}
