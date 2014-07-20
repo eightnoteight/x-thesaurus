@@ -26,3 +26,4 @@ show only verbs argument
 show only synonyms argument
 show only antonyms argument
 *declarations of list map vector constants are ugly in [x-thesaurus.h](src/x-thesaurus.h)
+filter any puctuation from the words
