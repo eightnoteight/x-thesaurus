@@ -5,7 +5,7 @@ A terminal client to lookup synonyms of an english word. x-thesaurus uses the [B
 
 Usage
 -----
-as of now it is only supported in *nix based systems.
+as of now it is only supported in `*`nix based systems.
 
 `x-thesaurus word`
 
@@ -25,5 +25,5 @@ show only nouns argument
 show only verbs argument
 show only synonyms argument
 show only antonyms argument
-*declarations of list map vector constants are ugly in [x-thesaurus.h](src/x-thesaurus.h)
+declarations of list map vector constants are ugly in [x-thesaurus.h](src/x-thesaurus.h)
 filter any puctuation from the words
