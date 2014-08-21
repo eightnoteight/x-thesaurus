@@ -1,3 +1,6 @@
+#include <cstring>
+#include <cstdlib>
+#include <string>
 #include "http-get.c"
 class GET
 {

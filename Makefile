@@ -6,13 +6,14 @@ SRC = src/x-thesaurus.cpp
 CC = g++
 BIN = x-thesaurus
 INSTALLPATH = /usr/local/bin/
-CFLAGS = -Wall -lcurl
+CFLAGS = -Wall
+LIBS = -L/usr/lib/x86_64-linux-gnu -lcurl
 
 x-thesaurus : ${SRC}
 	
 	@echo "build ${SRC}"
-	@echo "CC ${CFLAGS} ${SRC}"
-	@${CC} ${CFLAGS} ${SRC} -o ${BIN}
+	@echo "CC ${CFLAGS} ${SRC} ${LIBS}"
+	@${CC} ${CFLAGS} ${SRC} ${LIBS} -o ${BIN}
 
 install : ${BIN}
 	

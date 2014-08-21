@@ -17,12 +17,13 @@
 #include <algorithm>
 #include <iterator>
 #include <fstream>
+#include <cstring>
 
 #include <curl/curl.h>
-#include "../lib/jsoncpp.cpp"
 #include "getoptions.h"
+// #include <json/json.h>
 #include "../lib/http-get/http-get.cpp"
-#include <json/json.h>
+#include "../lib/jsoncpp.cpp"
 #include "colors.h"
 #include "init__x-thesaurus.h"
 

@@ -6,12 +6,12 @@
 // MIT licensed
 //
 extern "C" {
-
+#ifndef HTTP_GET_C
+#define HTTP_GET_C 1
 #include <curl/curl.h>
 #include <string.h>
 #include <stdlib.h>
 #include "http-get.h"
-
 /**
  * HTTP GET write callback
  */
@@ -103,5 +103,5 @@ void http_get_free(http_get_response_t *res) {
   if (NULL == res) return;
   if (res->data) free(res->data);
 }
-
+#endif
 }
