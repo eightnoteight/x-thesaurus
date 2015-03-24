@@ -129,4 +129,4 @@ const std::string Geopt::HELP_MSG="x-thesaurus 1.0 \n"
             "\t -n Show only Nouns.\n"
             "\t -a Show only Antonyms.\n"
             "\t -s Show only Synonyms.\n"
-            "\t Integer Maximum number of results";
+            "\t Integer Maximum number of results\n";
